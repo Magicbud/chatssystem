@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no">
+    <meta name="robots" content="noindex, nofollow, noimageindex, nosnippet">
+
+    <base href="/">
+    </base>
+    <title translate="chat.ui.common.label.site-title-animate">Chat</title>
+
+    <link rel="preconnect" href="">
+    <link rel="dns-prefetch" href="">
+    <link rel="preconnect" href="">
+    <link rel="dns-prefetch" href="">
+    <link rel="preconnect" href="">
+    <link rel="dns-prefetch" href="">
+    <link rel="preconnect" href="">
+    <link rel="dns-prefetch" href="">
+    <link rel="preconnect" href="">
+    <link rel="dns-prefetch" href="">
+
+    <link id="favicon" rel="shortcut icon" href="">
+    <link href="/manifest.webmanifest" rel="manifest">
+    <style type="text/css">
+    /*
+                HACK: Directly include the loading spinner. Plain and simple.
+                TODO: Move this into an extra file and inject the contents here for clean index.html
+            */
+    body.app-is-loading {
+        padding: 0;
+        overflow: hidden;
+    }
+
+    .app-is-loading .chat-loader {
+        opacity: 1;
+        visibility: visible;
+        -webkit-transition: all 0s;
+        transition: all 0s;
+    }
+
+    .chat-loader {
+        display: flex;
+        visibility: hidden;
+        opacity: 0;
+        position: fixed;
+        background-color: #4a3b3b;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        -webkit-transition: all 0.5s;
+        transition: all 0.5s;
+    }
+
+    .chat-loader .chat-loader-content {
+        text-align: center;
+    }
+
+    .chat-loader .chat-loader-animation {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 3px solid #aaa;
+        animation: chat-loader-spinner 1.2s linear infinite;
+        -webkit-animation: chat-loader-spinner 1.2s linear infinite;
+    }
+
+    @keyframes chat-loader-spinner {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    @-webkit-keyframes chat-loader-spinner {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .chat-loader .chat-loader-animation {
+        position: relative;
+    }
+
+    .chat-loader .chat-loader-animation:before, .chat-loader .chat-loader-animation:after {
+        content: '';
+        position: absolute;
+        top: 6px;
+        left: 22px;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: tomato;
+    }
+
+    .chat-loader .chat-loader-animation:after {
+        top: auto;
+        bottom: 6px;
+    }
+
+    .chat-loader .chat-loader-text {
+        color: white;
+        font-size: 4vh;
+    }
+    </style>
+    <!--
+            TODO: Once everything is switch clean up this area. It's messy for interopt reasons.
+
+            LIVECONFIG: Depending on the ENV inject:
+            - development: inject <script> block with liveConfig from package.json
+            - production: inject <script> block with placeholder for further injection during deployment
+        -->
+    <script>
+    window.liveConfig = {
+        "environment": "live",
+        "apiEndpoint": "https://v3.http.api.mein-chat.com/ws-proxy/api",
+        "imageProcessorEndpoint": "https://image-processor.mein-chat.com",
+        "rollbarEnabled": true,
+        "rollbarAccessToken": "2b55af8c0b0946188412cdb55b7e96b4",
+        "rollbarEnvironment": "production",
+        "filePickerApiKey": "AdsZKEFjAT5OzmMtozX5hz",
+        "awsAccessKey": "AKIAIOKORTSC3MKCZF3Q",
+        "yeKterceSswa": "vy/oi6fLU24oOr7jsPsXEKv9Vi1NXG75KSH+O/KI",
+        "yeKipAyhpig": "RlYgbOTmdAkYFpqPYXIv0BDSCLj5lEeb",
+        "s3Bucket": "chat-production-frontend-temp",
+        "socketEndpoint": "wss://v3.ws.api.mein-chat.com/ws-proxy/ws/api",
+        "useApiSocket": true
+    };
+    </script>
+    <script>
+    window.buildData = {
+        "revisions": {
+            "modules": "ae77935a0cfa025a66889ed45b4a66c9217dab3a",
+            "branch": "master",
+            "stage": ["571e8e1", "55b5eee", "665d1ad", "cf9d9af", "a88004c", "f26abe5", "3d7f665", "5b0180e", "c7a94d9", "7d79772", "fd890aa", "79af981", "bf76c17", "4a09595", "509fca0", "e8010d3", "8a1f906", "62c0570", "17a6170", "c011b80", "a21f47f", "2f047df", "246f1e4", "a15ed77", "dddf07d", "32d221a", "99ce926", "906e6a7", "62cc4d5", "578c65b", "441fcc1", "8c976b5", "8ba71a3", "b3300b8", "1d655d8", "6ec30ea", "44fc122", "16bc0ca", "29a21df", "6d5e11e", "3413680", "b28f834", "776f484", "8ff04fc", "3ac4336", "b5f90f4", "6675bfb", "3e7d18c", "06329ce", "5ba6719", "bd89acd", "fac8916", "5b962a7", "23bd7cf", "d3c32f7", "d1bc410", "f1c6818", "8d4c210", "4824bf0", "b1a414e", "f3a4edc", "06ace6d", "168d9f5", "83a00d4", "9da054b", "c663016", "3222e15", "26dcbcc", "977defa", "e39ddbc", "ca2213e", "1d759b1", "3bcc9d4", "3aa8484", "cb643e3", "e25e412", "e48c842", "c42fb43", "21d6cbd", "afcbb99", "25b4c58", "72b9618", "8388c3a", "385ff39", "bc0dc1e", "cfa6d3a", "407457d", "14d9376", "6599c1a", "8db9679", "f652df3", "90989b6", "de98b1a", "2d48b0a", "31e8ee4", "5aa394d", "eeb5a7f", "b9e5eaf", "e5729bc", "12ebdb1", "40042c8", "25fc8e9", "ba7ecc9", "d7fb2a1", "00a0507", "ec48481", "1763323", "ec00818", "c1d8a33", "89431f9", "d462b8f", "b299a8e", "3cbc32a", "9659db9", "9e2e2c2", "662f4dc", "876ace8", "859f5e2", "622b99b", "9943864", "df0a81a"],
+            "frontend_version": 69,
+            "worker_version": 2,
+            "build_url": "LOCAL",
+            "build_number": 39408,
+            "build_time": "2024-03-04T12:17:57.003Z",
+            "appType": "ANIMATE",
+            "clientApp": "FRONT_END_CHAT",
+            "clientVersion": 0
+        }
+    };
+    </script>
+    <link href="vendors~app.fb4bea42.css" rel="stylesheet">
+    <link href="app.39e5f26f.css" rel="stylesheet">
+</head>
+
+<body class="app-is-loading">
+    <!-- Site loader -->
+    <div class="chat-loader">
+        <div class="chat-loader-content">
+            <span class="chat-loader-animation"></span>
+            <div id="chat-landing-spinner-text" class="chat-loader-text">Loading...</div>
+        </div>
+    </div>
+
+    <app-root></app-root>
+
+    <!-- All-In-Page Modals -->
+    <div ui-view="chatModal"></div>
+
+    <script src="runtime.7239a7b1.js"></script>
+    <script src="vendors~app.0b30c0c2.js"></script>
+    <script src="app.4a3bbaa8.js"></script>
+</body>
+</html>
